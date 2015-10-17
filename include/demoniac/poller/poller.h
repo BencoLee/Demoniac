@@ -8,8 +8,6 @@
 #include <vector>
 #include <map>
 
-#include "demoniac/util/noncopyable.h"
-
 namespace demoniac {
 
 class EventCallback;
@@ -18,7 +16,7 @@ namespace poller {
 
 const int MAX_READY_EVENTS_NUM = 500;
 
-class Poller : demoniac::util::Noncopyable {
+class Poller{
 public:
 
     Poller();
@@ -34,6 +32,11 @@ public:
     virtual void UpdateEventCallback(const int& fd, const EventCallback& e) = 0;
 
     virtual void DeleteEventCallback(const int& fd) = 0;
+
+private:
+
+    Poller& operator = (const Poller& poller) = delete;
+    Poller(const Poller& poller) = delete;
 };
 
 

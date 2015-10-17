@@ -10,19 +10,15 @@
 
 namespace demoniac {
 
-__thread IOLoop
-*
-kIOLoopInstanceInThread = nullptr;
-
 IOLoop::IOLoop() {
-    kIOLoopInstanceInThread = this;
+    instance_ = this;
     poller_ = demoniac::poller::GetPoller();
     events_map_.clear();
-    quit_ = 0;
+    quited_ = 0;
 }
 
 
-void IOLoop::AddEventCallback(const int& fd, EventCallback e) {
+void IOLoop::addEventCallback(const int& fd, EventCallback e) {
 
     LOG_DEBUG << "fd" << fd << " Loop event added";
 
@@ -31,18 +27,18 @@ void IOLoop::AddEventCallback(const int& fd, EventCallback e) {
 }
 
 
-IOLoop *IOLoop::Current() {
-    if (kIOLoopInstanceInThread) {
-        return kIOLoopInstanceInThread;
+IOLoop *IOLoop::current() {
+    if (instance_) {
+        return instance_;
     }
     else {
-        kIOLoopInstanceInThread = new IOLoop;
-        return kIOLoopInstanceInThread;
+        instance_ = new IOLoop;
+        return instance_;
     }
 }
 
 
-void IOLoop::Loop() {
+void IOLoop::loop() {
     LOG_INFO << "Loop start.";
     int ready_num;
 
@@ -50,7 +46,7 @@ void IOLoop::Loop() {
     int count = 0;
 #endif
 
-    while (!quit_) {
+    while (!quited_) {
 
 #if defined(DC_DEBUG)
         LOG_DEBUG << "Loop " << count++ << " with " << events_map_.size() << " events";
@@ -67,13 +63,13 @@ void IOLoop::Loop() {
 }
 
 
-void IOLoop::Quit() {
-    quit_ = 1;
+void IOLoop::quit() {
+    quited_ = true;
 
 }
 
 
-void IOLoop::RemoveEventCallback(const int &fd) {
+void IOLoop::removeEventCallback(const int &fd) {
 #if defined(DC_DEBUG)
     LOG_DEBUG << "fd" << fd << " Loop event removed";
 #endif
@@ -81,14 +77,14 @@ void IOLoop::RemoveEventCallback(const int &fd) {
 }
 
 
-void IOLoop::Start() {
-    Loop();
+void IOLoop::start() {
+    loop();
 }
 
 
 IOLoop::~IOLoop() {
     delete poller_;
-    kIOLoopInstanceInThread = NULL;
+    instance_ = NULL;
 }
 
 

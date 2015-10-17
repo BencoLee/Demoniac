@@ -95,7 +95,7 @@ void TCPServer::_AddHandler(const sockaddr &sock_addr, function<void *()> func) 
     CallbackHandler e(sock_fd, this);
     e.set_read_callback();
 
-    demoniac::IOLoop::Current()->AddEventCallback(e);
+    demoniac::IOLoop::current()->addEventCallback(e);
 
 #if defined(DC_DEBUG)
     LOG_DEBUG << "fd" << sock_fd << " Listen established";

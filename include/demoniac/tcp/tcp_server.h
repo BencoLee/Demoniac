@@ -12,7 +12,6 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 
-#include "demoniac/util/noncopyable.h"
 #include "demoniac/util/error.h"
 #include "demoniac/log.h"
 
@@ -26,14 +25,7 @@ class TCPConnection;
 
 class TCPHandler;
 
-class TCPServer : util::Noncopyable{
-private:
-
-    const static int MAX_PENDING_CONNECTIONS_NUM = 200;
-
-    std::map<int, std::function<void *()>> route_map_;
-
-    std::map<int, TCPConnection *> connection_poll_;
+class TCPServer{
 public:
     TCPServer();
 
@@ -64,6 +56,16 @@ public:
 
     void RemoveConnection(int fd);
 
+private:
+
+    const static int MAX_PENDING_CONNECTIONS_NUM = 200;
+
+    std::map<int, std::function<void *()>> route_map_;
+
+    std::map<int, TCPConnection *> connection_poll_;
+
+    TCPServer(const TCPServer& tcp_server) = delete;
+    TCPServer& operator = (const TCPServer& tcp_server) = delete;
 };
 
 

@@ -35,7 +35,7 @@ TCPConnection::TCPConnection(const int &fd,
     e.SetCloseCallback([this](const int& fd, const int& data){
         this->CloseCallback(fd, data);
     });
-    demoniac::IOLoop::Current()->AddEventCallback(fd, e);
+    demoniac::IOLoop::current()->addEventCallback(fd, e);
 
 }
 
@@ -67,7 +67,7 @@ void TCPConnection::CloseCallback(int fd, int data) {
 #if defined(DC_DEBUG)
     LOG_DEBUG << "fd" << fd << " Connection disconnected " << data;
 #endif
-    demoniac::IOLoop::Current()->RemoveEventCallback(fd);
+    demoniac::IOLoop::current()->removeEventCallback(fd);
     tcp_server_->RemoveConnection(fd);
     close(fd);
 
