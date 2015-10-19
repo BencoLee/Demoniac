@@ -30,7 +30,7 @@ int main() {
     in_addr.sin_addr.s_addr = htonl(inet_addr(LISTEN_ADDR));
 
     demoniac::tcp::TCPServer *tcp_server = new demoniac::tcp::TCPServer();
-    tcp_server->AddHandler<EchoHandler>(*((sockaddr *) &in_addr));
+    tcp_server->addHandler<EchoHandler>(*((sockaddr *) &in_addr));
 
     demoniac::IOLoop::Current()->Loop();
     return 0;

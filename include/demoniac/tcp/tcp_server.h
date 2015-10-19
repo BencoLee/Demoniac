@@ -30,7 +30,7 @@ public:
     TCPServer();
 
     template<typename T>
-    void AddHandler(const sockaddr &sock_addr) {
+    void addHandler(const sockaddr &sock_addr) {
 
         if (!std::is_base_of<TCPHandler, T>::value) {
             LOG_ERROR << "Wrong handler type" << typeid(T).name();
@@ -52,9 +52,9 @@ public:
 
     void _ReadCallback(int fd, int data);
 
-    void CreateConnection(int fd, int data);
+    void createConnection(int fd, int data);
 
-    void RemoveConnection(int fd);
+    void removeConnection(int fd);
 
 private:
 

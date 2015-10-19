@@ -44,7 +44,7 @@ int main() {
     sockaddr sock_addr;
     memcpy(&sock_addr, &in_addr, sizeof(in_addr));
     demoniac::tcp::TCPServer *tcp_server = new demoniac::tcp::TCPServer();
-    tcp_server->AddHandler<EchoHandler>(*((sockaddr*)&in_addr));
+    tcp_server->addHandler<EchoHandler>(*((sockaddr *) &in_addr));
     demoniac::IOLoop::Current()->Start();
     return 0;
 }

@@ -19,7 +19,7 @@ TCPServer::TCPServer() {
 
 }
 
-void TCPServer::CreateConnection(int fd, int data) {
+void TCPServer::createConnection(int fd, int data) {
 
 #if defined(__linux__)
     if (data == -1) data = 1;
@@ -64,7 +64,7 @@ void TCPServer::CreateConnection(int fd, int data) {
 
 }
 
-void TCPServer::_AddHandler(const sockaddr &sock_addr, function<void *()> func) {
+void TCPServer::addHandler(const sockaddr &sock_addr, function<void *()> func) {
     int sock_fd, ret;
     if (sock_addr.sa_family != PF_UNIX &&
         sock_addr.sa_family != PF_INET) {
@@ -115,7 +115,7 @@ void TCPServer::_AddHandler(const sockaddr &sock_addr, function<void *()> func) 
 }
 
 
-void TCPServer::RemoveConnection(int fd) {
+void TCPServer::removeConnection(int fd) {
     connection_poll_.erase(fd);
 }
 

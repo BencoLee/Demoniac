@@ -15,9 +15,20 @@ public:
     ~Socket();
 
 
+
+
 private:
 
     int _socket_fd;
+
+    int socket_status_;
+
+    enum SOCKET_STATUS{
+        CONNECTING,
+        CONNECTED,
+        CLOSING,
+        CLOSED,
+    };
 
     Socket(const Socket& socket) = delete;
     Socket& operator = (const Socket& socket) = delete;
