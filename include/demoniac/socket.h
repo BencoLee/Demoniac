@@ -14,7 +14,13 @@ public:
 
     ~Socket();
 
+    int bind(const InetAddress& inet_addr);
 
+    int listen();
+
+    int accept(InetAddress* inet_addr);
+
+    int conenct(const InetAddress& inet_addr);
 
 
 private:
